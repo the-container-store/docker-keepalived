@@ -16,12 +16,21 @@ if [ ! -e "$FIRST_START_DONE" ]; then
   sed -i "s|{{ KEEPALIVED_INTERFACE }}|$KEEPALIVED_INTERFACE|g" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
   sed -i "s|{{ KEEPALIVED_PRIORITY }}|$KEEPALIVED_PRIORITY|g" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
   sed -i "s|{{ KEEPALIVED_PASSWORD }}|$KEEPALIVED_PASSWORD|g" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
+  sed -i "s|{{ KEEPALIVED_CHECK }}|$KEEPALIVED_CHECK|g" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
 
   if [ -n "$KEEPALIVED_NOTIFY" ]; then
     sed -i "s|{{ KEEPALIVED_NOTIFY }}|notify \"$KEEPALIVED_NOTIFY\"|g" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
     chmod +x $KEEPALIVED_NOTIFY
   else
     sed -i "/{{ KEEPALIVED_NOTIFY }}/d" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
+  fi
+
+  if [ -n "$KEEPALIVED_CHECK_SCRIPT" ]; then
+    sed -i "s|{{ KEEPALIVED_CHECK_SCRIPT }}|track_script {\n    chk_script\n  }|g" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
+    sed -i "s+{{ KEEPALIVED_CHECK_SCRIPT }}+$KEEPALIVED_CHECK_SCRIPT+g" $KEEPALIVED_CHECK
+    chmod +x $KEEPALIVED_CHECK
+  else
+    sed -i "/{{ KEEPALIVED_CHECK_SCRIPT }}/d" ${CONTAINER_SERVICE_DIR}/keepalived/assets/keepalived.conf
   fi
 
   # unicast peers

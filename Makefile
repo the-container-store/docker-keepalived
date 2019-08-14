@@ -1,5 +1,5 @@
-NAME = osixia/keepalived
-VERSION = 2.0.17
+NAME = moosebeandev/keepalived
+VERSION = 0.1.0
 
 .PHONY: build build-nocache test tag-latest push push-latest release git-tag-version
 
