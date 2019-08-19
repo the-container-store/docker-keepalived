@@ -102,6 +102,10 @@ See how to [set your own environment variables](#set-your-own-environment-variab
 
 - **KEEPALIVED_NOTIFY** Script to execute when node state change. Defaults to `/container/service/keepalived/assets/notify.sh`
 
+- **KEEPALIVED_CHECK** Script to execute every second for keepalived healthcheck. Script should return 0 for healthy and any other return code for unhealthy. Defaults to `/container/service/keepalived/assets/check.sh`
+
+- **KEEPALIVED_CHECK_SCRIPT** A single line bash command to be templated into the KEEPALIVED_CHECK script. For example `ls /var/log/messages` will return 0 (healthy) if the file exists. This is optional and if this isn't set the KEEPALIVED_CHECK script will not be utilized.
+
 - **KEEPALIVED_COMMAND_LINE_ARGUMENTS** Keepalived command line arguments; Defaults to `--log-detail --dump-conf`
 
 - **KEEPALIVED_STATE** The starting state of keepalived; it can either be MASTER or BACKUP.
