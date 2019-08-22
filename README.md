@@ -32,6 +32,8 @@ Latest release: 2.0.17 - Keepalived 2.0.17 - [Changelog](CHANGELOG.md) | [Docker
 
 ## TCS Notes
 
+First note is that we're on the "stable" branch and not master. The TeamCity build is set up to reflect this.
+
 TeamCity build is located in SRE > Envoy > Keepalived Image Build and Push. The image tag for the build/push is set as a job parameter so make sure to update that before running. The image is built from the "image" directory and pushed to [containerstore/keepalived @DockerHub](https://cloud.docker.com/u/containerstore/repository/docker/containerstore/keepalived). After that the version numbers can be specified in the Terraform vars for each workspace. After updating the Terraform var, taint and apply the "update_envoy_keepalived" null_resource and the containers will be updated with zero downtime.
 
 ## Quick start
